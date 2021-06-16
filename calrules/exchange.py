@@ -17,13 +17,9 @@ LOG = logging.getLogger(__name__)
 
 class Exchange:
     def __init__(self, exchange: dict) -> None:
-        port = 443
-        if "port" in exchange:
-            port = exchange["port"]
-
         try:
             creds = Credentials(f'{exchange["domain"]}\{exchange["username"]}', exchange["password"])
-            config = Configuration(server=exchange["server"], port=port, credentials=creds)
+            config = Configuration(server=exchange["server"], credentials=creds)
 
             if "ca_cert" in exchange and Path(exchange["ca_cert"]).is_file():
                 LOG.info(f"CA Path: {exchange['ca_cert']}")
